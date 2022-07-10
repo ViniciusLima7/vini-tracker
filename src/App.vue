@@ -4,7 +4,7 @@
       <MenuLateral />
     </div>
     <div class="column is-three-quarter">
-      <Formulario />
+      <Form></Form>
     </div>
   </main>
 </template>
@@ -12,11 +12,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MenuLateral from "./components/MenuLateral.vue";
-import Formulario from "./components/Formulario.vue";
+import Form from "./components/Form.vue";
 
 export default defineComponent({
   name: "App",
-  components: { MenuLateral, Formulario },
+  components: { MenuLateral, Form },
 });
 </script>
 

@@ -1,6 +1,8 @@
 <template>
   <header>
-    <h1><img src="../assets/logo.png" alt="Logo do Vini Tracker" /></h1>
+    <h1>
+      <img src="../assets/vini-trackerlogov2.png" alt="Logo do Vini Tracker" />
+    </h1>
   </header>
 </template>
 
