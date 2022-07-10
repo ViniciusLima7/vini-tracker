@@ -50,6 +50,7 @@ export default defineComponent({
   data() {
     return {
       timeInSeconds: 0,
+      cronometro: 0,
     };
   },
   computed: {
@@ -66,21 +67,21 @@ export default defineComponent({
     /**
      * Inicia o contador em segundos
      *@description
-     *10/07/2022 vlima Inicia Contador
+     *10/07/2022 vlima Inicia Contador e guarda a referencia na variavel cronometro
      */
     iniciar() {
       //Começar a Contar
-      setInterval(() => {
+      this.cronometro = setInterval(() => {
         this.timeInSeconds++;
       }, 1000);
     },
     /**
      * Finaliza o contador em segundos
      *@description
-     *10/07/2022 vlima Inicia Contador
+     *10/07/2022 vlima Finaliza Contador
      */
     finalizar() {
-      console.log("Finalizando");
+      clearInterval(this.cronometro);
     },
   },
 });
