@@ -17,11 +17,7 @@
         <div
           class="is-flex is-align-items-center is-justify-content-space-between"
         >
-          <section>
-            <strong>
-              {{ timeELapsed }}
-            </strong>
-          </section>
+          <Cronometro :timeInSeconds="timeInSeconds" />
 
           <button class="button" @click="iniciar">
             <span class="icon">
@@ -44,24 +40,18 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import Cronometro from "./Cronometro.vue";
 
 export default defineComponent({
   name: "Formulario",
+  components: {
+    Cronometro,
+  },
   data() {
     return {
       timeInSeconds: 0,
       cronometro: 0,
     };
-  },
-  computed: {
-    /**
-     * Retorna um contador, no formato, Hora,Minuto, Segundo
-     *@description
-     *10/07/2022 vlima Adiciona Tempo Decorrido
-     */
-    timeELapsed(): string {
-      return new Date(this.timeInSeconds * 1000).toISOString().substr(11, 8);
-    },
   },
   methods: {
     /**
