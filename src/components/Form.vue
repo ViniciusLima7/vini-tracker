@@ -10,11 +10,12 @@
           type="text"
           class="input"
           placeholder="Qual tarefa você deseja iniciar"
+          v-model="descricaoTarefa"
         />
       </div>
 
       <div class="column">
-        <Temporizador />
+        <Temporizador @temporizador-finalizado="finalizarTarefaData" />
       </div>
     </div>
   </div>
@@ -28,6 +29,23 @@ export default defineComponent({
   name: "Form",
   components: {
     Temporizador,
+  },
+  data() {
+    return {
+      descricaoTarefa: "",
+    };
+  },
+  methods: {
+    /**
+     * Após Finalizar a Tarefa pega a descrição e o tempo da mesma.
+     *@description
+     *24/07/2022 vlima Pega Dados da Tarefa
+     */
+    finalizarTarefaData(timeELapsed: number): void {
+      console.log("Tempo Da Tarefa é ", timeELapsed);
+      console.log("Descrição da Tarefa é ", this.descricaoTarefa);
+      this.descricaoTarefa = "";
+    },
   },
 });
 </script>
