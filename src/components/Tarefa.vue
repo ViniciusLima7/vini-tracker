@@ -1,5 +1,5 @@
 <template>
-  <div class="box has-text-weight-bold">
+  <Box>
     <div class="columns">
       <div class="column is-7">
         {{ tarefa.description || "Tarefa sem Descrição" }}
@@ -8,17 +8,18 @@
         <Cronometro :timeInSeconds="tarefa.timeInSeconds" />
       </div>
     </div>
-  </div>
+  </Box>
 </template>
 
 <script lang="ts">
 import ITarefa from "../interfaces/ITarefa";
 import { defineComponent, PropType } from "vue";
 import Cronometro from "./Cronometro.vue";
+import Box from "./Box.vue";
 
 export default defineComponent({
   name: "Tarefa",
-  components: { Cronometro },
+  components: { Cronometro, Box },
   props: {
     tarefa: {
       type: Object as PropType<ITarefa>,
@@ -27,9 +28,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style scoped>
-.box {
-  background: #faf0ca;
-}
-</style>
