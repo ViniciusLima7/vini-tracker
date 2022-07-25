@@ -27,6 +27,7 @@ import Temporizador from "./Temporizador.vue";
 
 export default defineComponent({
   name: "Form",
+  emits: ["aoAddTarefainList"],
   components: {
     Temporizador,
   },
@@ -42,8 +43,10 @@ export default defineComponent({
      *24/07/2022 vlima Pega Dados da Tarefa
      */
     finalizarTarefaData(timeELapsed: number): void {
-      console.log("Tempo Da Tarefa é ", timeELapsed);
-      console.log("Descrição da Tarefa é ", this.descricaoTarefa);
+      this.$emit("aoAddTarefainList", {
+        timeInSeconds: timeELapsed,
+        description: this.descricaoTarefa,
+      });
       this.descricaoTarefa = "";
     },
   },
