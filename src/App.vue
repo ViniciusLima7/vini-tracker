@@ -3,7 +3,7 @@
     <div class="column is-one-quarter">
       <MenuLateral />
     </div>
-    <div class="column is-three-quarter">
+    <div class="column is-three-quarter conteudo">
       <Form @aoAddTarefainList="addTarefainList"></Form>
       <div class="lista">
         <Tarefa
@@ -47,7 +47,7 @@ export default defineComponent({
   },
   methods: {
     /**
-     * Adiciona Tarefa  Digitada na Lista de Tarefas
+     * Faz o push das Tarefas na Lista de Tarefas
      *@description
      *25/07/2022 vlima Adiciona Tarefa na Lista de Tarefas
      */
@@ -61,5 +61,19 @@ export default defineComponent({
 <style>
 .lista {
   padding: 1.25rem;
+}
+
+main {
+  --bg-primary: #fff;
+  --text-primary: #000;
+}
+
+main.modo-escuro {
+  --bg-primary: #2b2d42;
+  --text-primary: #ddd;
+}
+
+.conteudo {
+  background-color: var(--bg-primary);
 }
 </style>
