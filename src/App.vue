@@ -11,6 +11,9 @@
           :key="index"
           :tarefa="tarefa"
         />
+        <Box v-if="ListIsEmpty">
+          Sem Tarefas iniciadas, adicione sua primeira tarefa do dia !
+        </Box>
       </div>
     </div>
   </main>
@@ -22,14 +25,25 @@ import MenuLateral from "./components/MenuLateral.vue";
 import Form from "./components/Form.vue";
 import Tarefa from "./components/Tarefa.vue";
 import ITarefa from "./interfaces/ITarefa";
+import Box from "./components/Box.vue";
 
 export default defineComponent({
   name: "App",
-  components: { MenuLateral, Form, Tarefa },
+  components: { MenuLateral, Form, Tarefa, Box },
   data() {
     return {
       tarefas: [] as ITarefa[],
     };
+  },
+  computed: {
+    /**
+     * Verifica se Lista está vazia
+     *@description
+     *25/07/2022 vlima Verifica Lista Vazia
+     */
+    ListIsEmpty(): boolean {
+      return this.tarefas.length === 0;
+    },
   },
   methods: {
     /**
