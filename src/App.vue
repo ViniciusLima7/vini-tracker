@@ -1,7 +1,10 @@
 <template>
-  <main class="columns is-gapless is-multiline">
+  <main
+    class="columns is-gapless is-multiline"
+    :class="{ 'modo-escuro': modoEscuroAtivo }"
+  >
     <div class="column is-one-quarter">
-      <MenuLateral />
+      <MenuLateral @aoTemaAlterado="toggleTema" />
     </div>
     <div class="column is-three-quarter conteudo">
       <Form @aoAddTarefainList="addTarefainList"></Form>
@@ -33,6 +36,7 @@ export default defineComponent({
   data() {
     return {
       tarefas: [] as ITarefa[],
+      modoEscuroAtivo: false,
     };
   },
   computed: {
@@ -53,6 +57,15 @@ export default defineComponent({
      */
     addTarefainList(tarefa: ITarefa) {
       this.tarefas.push(tarefa);
+    },
+
+    /**
+     * Altera o Estado do toggle Tema ao Clique do User no Botão
+     *@description
+     *26/07/2022 vlima toggle Tema
+     */
+    toggleTema(modoEscuroAtivo: boolean) {
+      this.modoEscuroAtivo = modoEscuroAtivo;
     },
   },
 });
