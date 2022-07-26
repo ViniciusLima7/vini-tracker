@@ -1,8 +1,8 @@
 <template>
   <section>
-    <strong class="display">
+    <p>
       {{ timeELapsed }}
-    </strong>
+    </p>
   </section>
 </template>
 
@@ -29,9 +29,3 @@ export default defineComponent({
   },
 });
 </script>
-
-<style>
-.display {
-  color: var(--text-primary);
-}
-</style>

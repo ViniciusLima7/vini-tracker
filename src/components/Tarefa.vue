@@ -2,9 +2,11 @@
   <Box>
     <div class="columns">
       <div class="column is-7">
+        <h3>Descrição</h3>
         {{ tarefa.description || "Tarefa sem Descrição" }}
       </div>
       <div class="column">
+        <h3>Tempo Gasto</h3>
         <Cronometro :timeInSeconds="tarefa.timeInSeconds" />
       </div>
     </div>
@@ -28,3 +30,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+h3 {
+  font-weight: bold;
+}
+</style>
