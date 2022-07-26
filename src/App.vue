@@ -78,12 +78,14 @@ export default defineComponent({
 
 main {
   --bg-primary: #fff;
+  --bg-header: #727272;
   --text-primary: #000;
 }
 
 main.modo-escuro {
-  --bg-primary: #2b2d42;
+  --bg-primary: #000000;
   --text-primary: #ddd;
+  --bg-header: #262626;
 }
 
 .conteudo {
