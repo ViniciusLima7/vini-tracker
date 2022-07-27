@@ -54,7 +54,9 @@ export default defineComponent({
 </script>
 
 <style>
-.form {
+.form,
+.input,
+.input::placeholder {
   color: var(--text-primary);
   background-color: var(--bg-primary);
 }
