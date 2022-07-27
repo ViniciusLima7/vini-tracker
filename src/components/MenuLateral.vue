@@ -3,7 +3,10 @@
     <h1>
       <img src="../assets/vini-trackerlogov2.png" alt="Logo do Vini Tracker" />
     </h1>
-    <button class="button" @click="toggleTema">{{ textButton }}</button>
+    <button class="button" @click="toggleTema">
+      <img class="theme" src="../assets/themeOn.svg" alt="" />
+      {{ textButton }}
+    </button>
   </header>
 </template>
 
@@ -52,6 +55,17 @@ header {
   width: 100%;
   height: 100vh;
   text-align: center;
+}
+
+.button {
+  color: var(--text-primary);
+  background-color: transparent;
+  border: transparent;
+}
+
+.theme {
+  padding-bottom: 5px;
+  height: 35px;
 }
 
 @media only screen and (max-width: 768px) {
