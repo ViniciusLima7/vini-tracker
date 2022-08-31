@@ -24,6 +24,19 @@ import { usageStore } from "@/store";
 
 export default defineComponent({
   name: "Formulario",
+  props: {
+    id: {
+      type: String,
+    },
+  },
+  mounted() {
+    if (this.id) {
+      const projeto = this.store.state.projetos.find(
+        (proj) => proj.id === this.id
+      );
+      this.nomeDoProjeto = projeto?.name || "";
+    }
+  },
   data() {
     return {
       nomeDoProjeto: "",
@@ -36,7 +49,15 @@ export default defineComponent({
      *02/08/2022 vlima Salvar Projeto
      */
     salvar() {
-      this.store.commit("ADD_PROJECT", this.nomeDoProjeto);
+      if (this.id) {
+        this.store.commit("EDIT_PROJECT", {
+          id: this.id,
+          name: this.nomeDoProjeto,
+        });
+      } else {
+        this.store.commit("ADD_PROJECT", this.nomeDoProjeto);
+      }
+
       this.nomeDoProjeto = "";
       this.$router.push("/projetos");
     },
