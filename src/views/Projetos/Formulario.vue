@@ -20,6 +20,7 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { usageStore } from "@/store";
+import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 
 export default defineComponent({
   name: "Formulario",
@@ -49,12 +50,12 @@ export default defineComponent({
      */
     salvar() {
       if (this.id) {
-        this.store.commit("EDIT_PROJECT", {
+        this.store.commit(EDIT_PROJECT, {
           id: this.id,
           name: this.nomeDoProjeto,
         });
       } else {
-        this.store.commit("ADD_PROJECT", this.nomeDoProjeto);
+        this.store.commit(ADD_PROJECT, this.nomeDoProjeto);
       }
 
       this.nomeDoProjeto = "";
