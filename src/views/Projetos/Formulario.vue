@@ -22,7 +22,7 @@ import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
 import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 import { TypeNotification } from "@/enums/TypeNotification";
-import { notificacaoMixin } from "../../mixins/notificar";
+import useNotificador from "../../hooks/notificador";
 
 export default defineComponent({
   name: "Formulario",
@@ -31,7 +31,7 @@ export default defineComponent({
       type: String,
     },
   },
-  mixins: [notificacaoMixin],
+
   mounted() {
     if (this.id) {
       const projeto = this.store.state.projetos.find(
@@ -72,8 +72,10 @@ export default defineComponent({
   },
   setup() {
     const store = useStore();
+    const { notificar } = useNotificador();
     return {
       store,
+      notificar,
       projetos: computed(() => store.state.projetos),
     };
   },
