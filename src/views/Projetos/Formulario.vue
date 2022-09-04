@@ -64,12 +64,25 @@ export default defineComponent({
       }
 
       this.nomeDoProjeto = "";
-      this.store.commit(ADD_NOTIFICATION, {
-        title: "Novo Projeto foi Salvo",
-        text: "Prontinho, projeto disponivel",
-        type: TypeNotification.SUCESSO,
-      });
+      this.notificar(
+        TypeNotification.SUCESSO,
+        "Excelente !",
+        "Projeto cadastrado com Sucesso"
+      );
       this.$router.push("/projetos");
+    },
+
+    /**
+     * Emite a Notiticação
+     *@description
+     *04/09/2022 vlima Emição de Notificações
+     */
+    notificar(type: TypeNotification, text: string, title: string) {
+      this.store.commit(ADD_NOTIFICATION, {
+        title,
+        text,
+        type,
+      });
     },
   },
   setup() {
