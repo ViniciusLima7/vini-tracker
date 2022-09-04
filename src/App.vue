@@ -7,6 +7,7 @@
       <MenuLateral @aoTemaAlterado="toggleTema" />
     </div>
     <div class="column is-three-quarter conteudo">
+      <Notificacoes />
       <!-- Visualização de Acordo com a Rota -->
       <router-view></router-view>
     </div>
@@ -16,10 +17,11 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import MenuLateral from "./components/MenuLateral.vue";
+import Notificacoes from "./components/Notificacoes.vue";
 
 export default defineComponent({
   name: "App",
-  components: { MenuLateral },
+  components: { MenuLateral, Notificacoes },
   data() {
     return {
       modoEscuroAtivo: false,

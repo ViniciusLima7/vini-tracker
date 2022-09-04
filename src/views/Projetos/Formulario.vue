@@ -1,6 +1,5 @@
 <template>
-  <section class="projetos">
-    <h1 class="title">Projetos</h1>
+  <section>
     <form @submit.prevent="salvar">
       <div class="field">
         <label for="nomeDoProjeto" class="label"> Nome do Projeto </label>
@@ -20,7 +19,10 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { usageStore } from "@/store";
+import { useStore } from "../../store";
+import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
+import { TypeNotification } from "@/enums/TypeNotification";
+import useNotificador from "../../hooks/notificador";
 
 export default defineComponent({
   name: "Formulario",
@@ -29,6 +31,7 @@ export default defineComponent({
       type: String,
     },
   },
+
   mounted() {
     if (this.id) {
       const projeto = this.store.state.projetos.find(
@@ -50,30 +53,31 @@ export default defineComponent({
      */
     salvar() {
       if (this.id) {
-        this.store.commit("EDIT_PROJECT", {
+        this.store.commit(EDIT_PROJECT, {
           id: this.id,
           name: this.nomeDoProjeto,
         });
       } else {
-        this.store.commit("ADD_PROJECT", this.nomeDoProjeto);
+        this.store.commit(ADD_PROJECT, this.nomeDoProjeto);
       }
 
       this.nomeDoProjeto = "";
+      this.notificar(
+        TypeNotification.SUCESSO,
+        "Excelente !",
+        "Projeto cadastrado com Sucesso"
+      );
       this.$router.push("/projetos");
     },
   },
   setup() {
-    const store = usageStore();
+    const store = useStore();
+    const { notificar } = useNotificador();
     return {
       store,
+      notificar,
       projetos: computed(() => store.state.projetos),
     };
   },
 });
 </script>
-
-<style scoped>
-.projetos {
-  padding: 1.25rem;
-}
-</style>
