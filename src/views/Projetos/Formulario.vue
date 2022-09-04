@@ -20,7 +20,12 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
-import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
+import {
+  ADD_NOTIFICATION,
+  ADD_PROJECT,
+  EDIT_PROJECT,
+} from "@/store/type-mutations";
+import { TypeNotification } from "@/enums/TypeNotification";
 
 export default defineComponent({
   name: "Formulario",
@@ -59,6 +64,11 @@ export default defineComponent({
       }
 
       this.nomeDoProjeto = "";
+      this.store.commit(ADD_NOTIFICATION, {
+        title: "Novo Projeto foi Salvo",
+        text: "Prontinho, projeto disponivel",
+        type: TypeNotification.SUCESSO,
+      });
       this.$router.push("/projetos");
     },
   },
