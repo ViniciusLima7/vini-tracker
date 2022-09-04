@@ -17,4 +17,8 @@ export default defineComponent({
 .projetos {
   padding: 1.25rem;
 }
+
+h1 {
+  color: var(--text-primary);
+}
 </style>

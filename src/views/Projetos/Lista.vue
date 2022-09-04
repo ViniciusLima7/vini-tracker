@@ -57,3 +57,11 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+table,
+th {
+  color: var(--text-primary) !important;
+  background-color: var(--bg-primary);
+}
+</style>
