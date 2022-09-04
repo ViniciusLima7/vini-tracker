@@ -58,6 +58,14 @@ export default defineComponent({
           name: this.nomeDoProjeto,
         });
       } else {
+        if (this.nomeDoProjeto == "") {
+          this.notificar(
+            TypeNotification.FALHA,
+            "Erro !",
+            "Projeto não cadastrado! Digite um nome válido"
+          );
+          return;
+        }
         this.store.commit(ADD_PROJECT, this.nomeDoProjeto);
       }
 

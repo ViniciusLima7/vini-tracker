@@ -40,19 +40,29 @@
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
 import { DELETE_PROJETO } from "@/store/type-mutations";
+import { TypeNotification } from "@/enums/TypeNotification";
+import useNotificador from "../../hooks/notificador";
 
 export default defineComponent({
   name: "Projetos",
   methods: {
     excluir(id: string) {
       this.store.commit(DELETE_PROJETO, id);
+      this.notificar(
+        TypeNotification.SUCESSO,
+        "Excelente !",
+        "Projeto Excluido com Sucesso"
+      );
     },
   },
   setup() {
     const store = useStore();
+    const { notificar } = useNotificador();
+
     return {
       projetos: computed(() => store.state.projetos),
       store,
+      notificar,
     };
   },
 });
