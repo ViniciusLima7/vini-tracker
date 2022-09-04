@@ -14,6 +14,8 @@ import Form from "../components/Form.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
 import ITarefa from "../interfaces/ITarefa";
+import { TypeNotification } from "@/enums/TypeNotification";
+import useNotificador from "../hooks/notificador";
 
 export default defineComponent({
   name: "Tarefas",
@@ -40,8 +42,23 @@ export default defineComponent({
      *25/07/2022 vlima Adiciona Tarefa na Lista de Tarefas
      */
     addTarefainList(tarefa: ITarefa) {
+      if (tarefa.projeto == undefined) {
+        this.notificar(
+          TypeNotification.ATENÇÃO,
+          "Aviso !",
+          "Para ter um melhor controle de seu tempo gasto, sempre vincule as tarefas aos seus projetos."
+        );
+      }
+
       this.tarefas.push(tarefa);
     },
+  },
+  setup() {
+    const { notificar } = useNotificador();
+
+    return {
+      notificar,
+    };
   },
 });
 </script>
