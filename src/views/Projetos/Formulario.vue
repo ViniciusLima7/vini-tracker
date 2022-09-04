@@ -19,7 +19,7 @@
 
 <script lang="ts">
 import { computed, defineComponent } from "vue";
-import { usageStore } from "@/store";
+import { useStore } from "../../store";
 import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 
 export default defineComponent({
@@ -63,7 +63,7 @@ export default defineComponent({
     },
   },
   setup() {
-    const store = usageStore();
+    const store = useStore();
     return {
       store,
       projetos: computed(() => store.state.projetos),
