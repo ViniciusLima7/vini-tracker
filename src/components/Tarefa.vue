@@ -1,9 +1,13 @@
 <template>
   <Box>
     <div class="columns">
-      <div class="column is-7">
+      <div class="column is-4">
         <h3>Descrição</h3>
         {{ tarefa.description || "Tarefa sem Descrição" }}
+      </div>
+      <div class="column is-3">
+        <h3>Projeto</h3>
+        {{ tarefa.projeto?.name || "N/D" }}
       </div>
       <div class="column">
         <h3>Tempo Gasto</h3>
