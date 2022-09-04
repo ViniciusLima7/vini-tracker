@@ -20,12 +20,9 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
-import {
-  ADD_NOTIFICATION,
-  ADD_PROJECT,
-  EDIT_PROJECT,
-} from "@/store/type-mutations";
+import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 import { TypeNotification } from "@/enums/TypeNotification";
+import { notificacaoMixin } from "../../mixins/notificar";
 
 export default defineComponent({
   name: "Formulario",
@@ -34,6 +31,7 @@ export default defineComponent({
       type: String,
     },
   },
+  mixins: [notificacaoMixin],
   mounted() {
     if (this.id) {
       const projeto = this.store.state.projetos.find(
@@ -70,19 +68,6 @@ export default defineComponent({
         "Projeto cadastrado com Sucesso"
       );
       this.$router.push("/projetos");
-    },
-
-    /**
-     * Emite a Notiticação
-     *@description
-     *04/09/2022 vlima Emição de Notificações
-     */
-    notificar(type: TypeNotification, text: string, title: string) {
-      this.store.commit(ADD_NOTIFICATION, {
-        title,
-        text,
-        type,
-      });
     },
   },
   setup() {
