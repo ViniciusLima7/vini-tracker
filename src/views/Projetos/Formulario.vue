@@ -61,11 +61,7 @@ export default defineComponent({
           .then(() => this.isSuccess());
       } else {
         if (this.nomeDoProjeto == "") {
-          this.notificar(
-            TypeNotification.FALHA,
-            "Erro !",
-            "Projeto não cadastrado! Digite um nome válido"
-          );
+          this.isError();
           return;
         }
         this.store
@@ -77,7 +73,7 @@ export default defineComponent({
     /**
      * Emita a Notificação de Sucesso e faz o push na Criação ou Alteração do Projeto
      *@description
-     *02/08/2022 Lida com o Sucesso de uma alteração na Aplicação
+     *06/09/2022 Lida com o Sucesso de uma alteração na Aplicação
      */
     isSuccess() {
       this.nomeDoProjeto = "";
@@ -87,6 +83,19 @@ export default defineComponent({
         "Projeto cadastrado com Sucesso"
       );
       this.$router.push("/projetos");
+    },
+
+    /**
+     * Emita a Notificação de Falha
+     *@description
+     *06/09/2022 Lida com a Falha na Ação do User
+     */
+    isError() {
+      this.notificar(
+        TypeNotification.FALHA,
+        "Erro !",
+        "Projeto não cadastrado! Digite um nome válido"
+      );
     },
   },
   setup() {
