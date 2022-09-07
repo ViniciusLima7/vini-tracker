@@ -20,9 +20,9 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
-import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../../hooks/notificador";
+import { CREATE_PROJECT, UPDATE_PROJECT } from "@/store/type-actions";
 
 export default defineComponent({
   name: "Formulario",
@@ -53,10 +53,12 @@ export default defineComponent({
      */
     salvar() {
       if (this.id) {
-        this.store.commit(EDIT_PROJECT, {
-          id: this.id,
-          name: this.nomeDoProjeto,
-        });
+        this.store
+          .dispatch(UPDATE_PROJECT, {
+            id: this.id,
+            name: this.nomeDoProjeto,
+          })
+          .then(() => this.isSuccess());
       } else {
         if (this.nomeDoProjeto == "") {
           this.notificar(
@@ -66,9 +68,18 @@ export default defineComponent({
           );
           return;
         }
-        this.store.commit(ADD_PROJECT, this.nomeDoProjeto);
+        this.store
+          .dispatch(CREATE_PROJECT, this.nomeDoProjeto)
+          .then(() => this.isSuccess());
       }
+    },
 
+    /**
+     * Emita a Notificação de Sucesso e faz o push na Criação ou Alteração do Projeto
+     *@description
+     *02/08/2022 Lida com o Sucesso de uma alteração na Aplicação
+     */
+    isSuccess() {
       this.nomeDoProjeto = "";
       this.notificar(
         TypeNotification.SUCESSO,
