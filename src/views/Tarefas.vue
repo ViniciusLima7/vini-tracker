@@ -82,6 +82,7 @@ export default defineComponent({
       return this.tarefas.length === 0;
     },
   },
+
   methods: {
     /**
      * Faz o push das Tarefas na Lista de Tarefas
@@ -99,20 +100,36 @@ export default defineComponent({
       this.store.dispatch(CREATE_TASK, tarefa);
     },
 
+    /**
+     * Seleciona a tarefa
+     *@description
+     *19/09/20/22 vlima Faz a Seleção da tarefa que o cliente  clicou
+     */
     selecionarTarefa(tarefa: ITarefa) {
       this.tarefaSelecionada = tarefa;
     },
 
+    /**
+     * Fecha a Modal
+     *@description
+     *19/09/20/22 vlima Fecha a Modal da edição de tarefa
+     */
     fecharModal() {
       this.tarefaSelecionada = null;
     },
 
+    /**
+     * Altera Tarefa
+     *@description
+     *19/09/20/22 vlima Faz update na tarefa Selecionada
+     */
     alterarTarefa() {
       this.store
         .dispatch(UPDATE_TASK, this.tarefaSelecionada)
         .then(() => this.fecharModal());
     },
   },
+
   setup() {
     const { notificar } = useNotificador();
     const store = useStore();

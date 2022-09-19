@@ -33,7 +33,13 @@ export default defineComponent({
       required: true,
     },
   },
+
   methods: {
+    /**
+     * Tarefa Clicada
+     *@description
+     *19/09/20/22 vlima Faz a emissão do evento ao clicar em qualquer parte da tarefa
+     */
     tarefaClicked(): void {
       this.$emit("aotarefaClicked", this.tarefa);
     },

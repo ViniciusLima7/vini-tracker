@@ -10,6 +10,9 @@ export interface StateTarefa {
 }
 
 export const tarefa: Module<StateTarefa, State> = {
+  state: {
+    tarefas: [],
+  },
   mutations: {
     [ADD_TASK](state, tarefa: ITarefa) {
       state.tarefas.push(tarefa);
@@ -18,6 +21,7 @@ export const tarefa: Module<StateTarefa, State> = {
     [DEFINIR_TAKS](state, tarefas: ITarefa[]) {
       state.tarefas = tarefas;
     },
+
     [EDIT_TASK](state, tarefa: ITarefa) {
       const index = state.tarefas.findIndex((task) => task.id == tarefa.id);
       state.tarefas[index] = tarefa;
@@ -35,6 +39,7 @@ export const tarefa: Module<StateTarefa, State> = {
         .post("/tarefas", tarefa)
         .then((response) => commit(ADD_TASK, response.data));
     },
+
     [UPDATE_TASK]({ commit }, tarefa: ITarefa) {
       return clienteHttp
         .put(`/tarefas/${tarefa.id}`, tarefa)

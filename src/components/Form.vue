@@ -69,6 +69,7 @@ export default defineComponent({
       this.descricaoTarefa = "";
     },
   },
+
   setup() {
     const store = useStore(key);
     return {

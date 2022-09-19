@@ -98,6 +98,7 @@ export default defineComponent({
       );
     },
   },
+
   setup() {
     const store = useStore();
     const { notificar } = useNotificador();
