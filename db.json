@@ -4,5 +4,16 @@
       "id": 1,
       "name": "REACT JS"
     }
+  ],
+  "tarefas": [
+    {
+      "id": 1,
+      "timeInSeconds": 120,
+      "description": "Task 1",
+      "projeto": {
+        "id": 1,
+        "name": "REACT JS"
+      }
+    }
   ]
 }

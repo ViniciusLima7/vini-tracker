@@ -1,4 +1,5 @@
 import IProjeto from "../interfaces/IProjeto";
+import ITarefa from "../interfaces/ITarefa";
 import INotificacao from "../interfaces/INotificacao";
 import { InjectionKey } from "vue";
 import { createStore, Store, useStore as vuexUseStore } from "vuex";
@@ -6,12 +7,14 @@ import {
   ADD_NOTIFICATION,
   ADD_PROJECT,
   DEFINIR_PROJECTS,
+  DEFINIR_TAKS,
   DELETE_PROJECT,
   EDIT_PROJECT,
 } from "./type-mutations";
 import {
   CREATE_PROJECT,
   GET_PROJECTS,
+  GET_TASKS,
   REMOVE_PROJECT,
   UPDATE_PROJECT,
 } from "./type-actions";
@@ -20,6 +23,7 @@ import clienteHttp from "@/http";
 interface State {
   projetos: IProjeto[];
   notificacoes: INotificacao[];
+  tarefas: ITarefa[];
 }
 
 export const key: InjectionKey<Store<State>> = Symbol();
@@ -27,6 +31,7 @@ export const key: InjectionKey<Store<State>> = Symbol();
 export const store = createStore<State>({
   state: {
     projetos: [],
+    tarefas: [],
     notificacoes: [],
   },
   mutations: {
@@ -49,6 +54,10 @@ export const store = createStore<State>({
 
     [DEFINIR_PROJECTS](state, projetos: IProjeto[]) {
       state.projetos = projetos;
+    },
+
+    [DEFINIR_TAKS](state, tarefas: ITarefa[]) {
+      state.tarefas = tarefas;
     },
 
     [ADD_NOTIFICATION](state, novaNotificacao: INotificacao) {
@@ -84,6 +93,12 @@ export const store = createStore<State>({
       return clienteHttp
         .delete(`/projetos/${id}`)
         .then(() => commit(DELETE_PROJECT, id));
+    },
+
+    [GET_TASKS]({ commit }) {
+      clienteHttp
+        .get("tarefas")
+        .then((resp) => commit(DEFINIR_TAKS, resp.data));
     },
   },
 });

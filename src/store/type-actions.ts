@@ -2,3 +2,5 @@ export const GET_PROJECTS = "GET_PROJECTS";
 export const CREATE_PROJECT = "CREATE_PROJECT";
 export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const REMOVE_PROJECT = "REMOVE_PROJECT";
+
+export const GET_TASKS = "GET_TASKS";

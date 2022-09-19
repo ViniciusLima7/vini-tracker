@@ -9,22 +9,18 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { computed, defineComponent } from "vue";
 import Form from "../components/Form.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
-import ITarefa from "../interfaces/ITarefa";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../hooks/notificador";
+import { GET_TASKS } from "@/store/type-actions";
+import { useStore } from "@/store";
 
 export default defineComponent({
   name: "Tarefas",
   components: { Form, Tarefa, Box },
-  data() {
-    return {
-      tarefas: [] as ITarefa[],
-    };
-  },
   computed: {
     /**
      * Verifica se Lista está vazia
@@ -41,22 +37,24 @@ export default defineComponent({
      *@description
      *25/07/2022 vlima Adiciona Tarefa na Lista de Tarefas
      */
-    addTarefainList(tarefa: ITarefa) {
-      if (tarefa.projeto == undefined) {
-        this.notificar(
-          TypeNotification.ATENÇÃO,
-          "Aviso !",
-          "Para ter um melhor controle de seu tempo gasto, sempre vincule as tarefas aos seus projetos."
-        );
-      }
-
-      this.tarefas.push(tarefa);
-    },
+    // addTarefainList(tarefa: ITarefa) {
+    //   if (tarefa.projeto == undefined) {
+    //     this.notificar(
+    //       TypeNotification.ATENÇÃO,
+    //       "Aviso !",
+    //       "Para ter um melhor controle de seu tempo gasto, sempre vincule as tarefas aos seus projetos."
+    //     );
+    //   }
+    //   this.tarefas.push(tarefa);
+    // },
   },
   setup() {
     const { notificar } = useNotificador();
+    const store = useStore();
+    store.dispatch(GET_TASKS);
 
     return {
+      tarefas: computed(() => store.state.tarefas),
       notificar,
     };
   },
