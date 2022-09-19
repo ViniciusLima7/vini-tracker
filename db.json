@@ -3,26 +3,11 @@
     {
       "id": 1,
       "name": "REACT JS"
-    }
-  ],
-  "tarefas": [
-    {
-      "id": 1,
-      "timeInSeconds": 120,
-      "description": "Task 1",
-      "projeto": {
-        "id": 1,
-        "name": "REACT JS"
-      }
     },
     {
-      "timeInSeconds": 18,
-      "description": "takas 2 - update",
-      "projeto": {
-        "id": 1,
-        "name": "REACT JS"
-      },
-      "id": 2
+      "name": "Pessoal",
+      "id": 3
     }
-  ]
+  ],
+  "tarefas": []
 }

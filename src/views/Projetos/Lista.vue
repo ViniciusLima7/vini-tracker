@@ -61,7 +61,7 @@ export default defineComponent({
     store.dispatch(GET_PROJECTS);
 
     return {
-      projetos: computed(() => store.state.projetos),
+      projetos: computed(() => store.state.project.projetos),
       store,
       notificar,
     };

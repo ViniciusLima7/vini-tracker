@@ -34,7 +34,7 @@ export default defineComponent({
 
   mounted() {
     if (this.id) {
-      const projeto = this.store.state.projetos.find(
+      const projeto = this.store.state.project.projetos.find(
         (proj) => proj.id === this.id
       );
       this.nomeDoProjeto = projeto?.name || "";
@@ -104,7 +104,7 @@ export default defineComponent({
     return {
       store,
       notificar,
-      projetos: computed(() => store.state.projetos),
+      projetos: computed(() => store.state.project.projetos),
     };
   },
 });

@@ -120,7 +120,7 @@ export default defineComponent({
     store.dispatch(GET_PROJECTS);
 
     return {
-      tarefas: computed(() => store.state.tarefas),
+      tarefas: computed(() => store.state.tarefa.tarefas),
       store,
       notificar,
     };
