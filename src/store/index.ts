@@ -6,6 +6,7 @@ import { createStore, Store, useStore as vuexUseStore } from "vuex";
 import {
   ADD_NOTIFICATION,
   ADD_PROJECT,
+  ADD_TASK,
   DEFINIR_PROJECTS,
   DEFINIR_TAKS,
   DELETE_PROJECT,
@@ -13,6 +14,7 @@ import {
 } from "./type-mutations";
 import {
   CREATE_PROJECT,
+  CREATE_TASK,
   GET_PROJECTS,
   GET_TASKS,
   REMOVE_PROJECT,
@@ -54,6 +56,10 @@ export const store = createStore<State>({
 
     [DEFINIR_PROJECTS](state, projetos: IProjeto[]) {
       state.projetos = projetos;
+    },
+
+    [ADD_TASK](state, tarefa: ITarefa) {
+      state.tarefas.push(tarefa);
     },
 
     [DEFINIR_TAKS](state, tarefas: ITarefa[]) {
@@ -99,6 +105,11 @@ export const store = createStore<State>({
       clienteHttp
         .get("tarefas")
         .then((resp) => commit(DEFINIR_TAKS, resp.data));
+    },
+    [CREATE_TASK]({ commit }, tarefa: ITarefa) {
+      return clienteHttp
+        .post("/tarefas", tarefa)
+        .then((response) => commit(ADD_TASK, response.data));
     },
   },
 });

@@ -5,4 +5,5 @@ export const DEFINIR_PROJECTS = "DEFINIR_PROJECTS";
 
 export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 
+export const ADD_TASK = "ADD_TASK";
 export const DEFINIR_TAKS = "DEFINIR_TAKS";

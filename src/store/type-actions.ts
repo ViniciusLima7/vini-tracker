@@ -4,3 +4,4 @@ export const UPDATE_PROJECT = "UPDATE_PROJECT";
 export const REMOVE_PROJECT = "REMOVE_PROJECT";
 
 export const GET_TASKS = "GET_TASKS";
+export const CREATE_TASK = "CREATE_TASK";
