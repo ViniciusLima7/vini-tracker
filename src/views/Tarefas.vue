@@ -1,10 +1,48 @@
 <template>
   <Form @aoAddTarefainList="addTarefainList"></Form>
   <div class="lista">
-    <Tarefa v-for="(tarefa, index) in tarefas" :key="index" :tarefa="tarefa" />
+    <Tarefa
+      v-for="(tarefa, index) in tarefas"
+      :key="index"
+      :tarefa="tarefa"
+      @aotarefaClicked="selecionarTarefa"
+    />
     <Box v-if="ListIsEmpty">
       Sem Tarefas iniciadas, adicione sua primeira tarefa do dia !
     </Box>
+    <div
+      class="modal"
+      :class="{ 'is-active': tarefaSelecionada }"
+      v-if="tarefaSelecionada"
+    >
+      <div class="modal-background"></div>
+      <div class="modal-card">
+        <header class="modal-card-head">
+          <p class="modal-card-title">Editar Tarefa</p>
+          <button
+            class="delete"
+            aria-label="close"
+            @click="fecharModal"
+          ></button>
+        </header>
+        <section class="modal-card-body">
+          <!-- Content ... -->
+          <div class="field">
+            <label for="descricaoDaTarefa" class="label">Descrição</label>
+            <input
+              type="text"
+              class="input"
+              v-model="tarefaSelecionada.description"
+              id="descricaoDaTarefa"
+            />
+          </div>
+        </section>
+        <footer class="modal-card-foot">
+          <button class="button is-success">Salvar Alterações</button>
+          <button class="button" @click="fecharModal">Cancelar</button>
+        </footer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -22,6 +60,11 @@ import ITarefa from "@/interfaces/ITarefa";
 export default defineComponent({
   name: "Tarefas",
   components: { Form, Tarefa, Box },
+  data() {
+    return {
+      tarefaSelecionada: null as ITarefa | null,
+    };
+  },
   computed: {
     /**
      * Verifica se Lista está vazia
@@ -47,6 +90,14 @@ export default defineComponent({
         );
       }
       this.store.dispatch(CREATE_TASK, tarefa);
+    },
+
+    selecionarTarefa(tarefa: ITarefa) {
+      this.tarefaSelecionada = tarefa;
+    },
+
+    fecharModal() {
+      this.tarefaSelecionada = null;
     },
   },
   setup() {
