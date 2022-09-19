@@ -38,7 +38,9 @@
           </div>
         </section>
         <footer class="modal-card-foot">
-          <button class="button is-success">Salvar Alterações</button>
+          <button @click="alterarTarefa" class="button is-success">
+            Salvar Alterações
+          </button>
           <button class="button" @click="fecharModal">Cancelar</button>
         </footer>
       </div>
@@ -53,7 +55,12 @@ import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../hooks/notificador";
-import { CREATE_TASK, GET_PROJECTS, GET_TASKS } from "@/store/type-actions";
+import {
+  CREATE_TASK,
+  GET_PROJECTS,
+  GET_TASKS,
+  UPDATE_TASK,
+} from "@/store/type-actions";
 import { useStore } from "@/store";
 import ITarefa from "@/interfaces/ITarefa";
 
@@ -98,6 +105,12 @@ export default defineComponent({
 
     fecharModal() {
       this.tarefaSelecionada = null;
+    },
+
+    alterarTarefa() {
+      this.store
+        .dispatch(UPDATE_TASK, this.tarefaSelecionada)
+        .then(() => this.fecharModal());
     },
   },
   setup() {

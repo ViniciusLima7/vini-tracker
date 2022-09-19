@@ -11,6 +11,7 @@ import {
   DEFINIR_TAKS,
   DELETE_PROJECT,
   EDIT_PROJECT,
+  EDIT_TASK,
 } from "./type-mutations";
 import {
   CREATE_PROJECT,
@@ -19,6 +20,7 @@ import {
   GET_TASKS,
   REMOVE_PROJECT,
   UPDATE_PROJECT,
+  UPDATE_TASK,
 } from "./type-actions";
 import clienteHttp from "@/http";
 
@@ -65,6 +67,10 @@ export const store = createStore<State>({
     [DEFINIR_TAKS](state, tarefas: ITarefa[]) {
       state.tarefas = tarefas;
     },
+    [EDIT_TASK](state, tarefa: ITarefa) {
+      const index = state.tarefas.findIndex((task) => task.id == tarefa.id);
+      state.tarefas[index] = tarefa;
+    },
 
     [ADD_NOTIFICATION](state, novaNotificacao: INotificacao) {
       novaNotificacao.id = new Date().getTime();
@@ -106,10 +112,16 @@ export const store = createStore<State>({
         .get("tarefas")
         .then((resp) => commit(DEFINIR_TAKS, resp.data));
     },
+
     [CREATE_TASK]({ commit }, tarefa: ITarefa) {
       return clienteHttp
         .post("/tarefas", tarefa)
         .then((response) => commit(ADD_TASK, response.data));
+    },
+    [UPDATE_TASK]({ commit }, tarefa: ITarefa) {
+      return clienteHttp
+        .put(`/tarefas/${tarefa.id}`, tarefa)
+        .then(() => commit(EDIT_TASK, tarefa));
     },
   },
 });

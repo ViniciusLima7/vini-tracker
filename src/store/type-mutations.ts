@@ -7,3 +7,4 @@ export const ADD_NOTIFICATION = "ADD_NOTIFICATION";
 
 export const ADD_TASK = "ADD_TASK";
 export const DEFINIR_TAKS = "DEFINIR_TAKS";
+export const EDIT_TASK = "EDIT_TASK";
