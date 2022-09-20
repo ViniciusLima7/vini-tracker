@@ -1,8 +1,18 @@
 import clienteHttp from "@/http";
 import ITarefa from "@/interfaces/ITarefa";
 import { State } from "@/store";
-import { CREATE_TASK, GET_TASKS, UPDATE_TASK } from "@/store/type-actions";
-import { ADD_TASK, DEFINIR_TAKS, EDIT_TASK } from "@/store/type-mutations";
+import {
+  CREATE_TASK,
+  GET_TASKS,
+  REMOVE_TASK,
+  UPDATE_TASK,
+} from "@/store/type-actions";
+import {
+  ADD_TASK,
+  DEFINIR_TAKS,
+  DELETE_TASK,
+  EDIT_TASK,
+} from "@/store/type-mutations";
 import { Module } from "vuex";
 
 export interface StateTarefa {
@@ -25,6 +35,10 @@ export const tarefa: Module<StateTarefa, State> = {
     [EDIT_TASK](state, tarefa: ITarefa) {
       const index = state.tarefas.findIndex((task) => task.id == tarefa.id);
       state.tarefas[index] = tarefa;
+    },
+
+    [DELETE_TASK](state, id: number) {
+      state.tarefas = state.tarefas.filter((task) => task.id != id);
     },
   },
   actions: {
@@ -49,6 +63,12 @@ export const tarefa: Module<StateTarefa, State> = {
       return clienteHttp
         .put(`/tarefas/${tarefa.id}`, tarefa)
         .then(() => commit(EDIT_TASK, tarefa));
+    },
+
+    [REMOVE_TASK]({ commit }, id: number) {
+      return clienteHttp
+        .delete(`/tarefas/${id}`)
+        .then(() => commit(DELETE_TASK, id));
     },
   },
 };

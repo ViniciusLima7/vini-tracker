@@ -45,6 +45,9 @@
           Salvar Alterações
         </button>
         <button class="button" @click="fecharModal">Cancelar</button>
+        <button @click="excluirTarefa" class="button is-danger">
+          Excluir Tarefa
+        </button>
       </template>
     </Modal>
   </div>
@@ -62,6 +65,7 @@ import {
   CREATE_TASK,
   GET_PROJECTS,
   GET_TASKS,
+  REMOVE_TASK,
   UPDATE_TASK,
 } from "@/store/type-actions";
 import { useStore } from "@/store";
@@ -129,6 +133,17 @@ export default defineComponent({
     alterarTarefa() {
       this.store
         .dispatch(UPDATE_TASK, this.tarefaSelecionada)
+        .then(() => this.fecharModal());
+    },
+
+    /**
+     * Deleta Tarefa
+     *@description
+     *20/09/20/22 vlima Faz a exclusão da Tarefa selecionada
+     */
+    excluirTarefa() {
+      this.store
+        .dispatch(REMOVE_TASK, this.tarefaSelecionada?.id)
         .then(() => this.fecharModal());
     },
   },
