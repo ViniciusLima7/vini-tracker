@@ -49,12 +49,14 @@ main {
   --bg-primary: #fff;
   --bg-header: #727272;
   --text-primary: #000;
+  --bg-blue: #add8e6;
 }
 
 main.modo-escuro {
   --bg-primary: #000000;
   --text-primary: #ddd;
   --bg-header: #262626;
+  --bg-blue: #add8e6;
 }
 
 .conteudo {

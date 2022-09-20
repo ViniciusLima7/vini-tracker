@@ -22,3 +22,13 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.modal-card-head {
+  background-color: var(--bg-blue);
+}
+.modal-card-body,
+.modal-card-foot {
+  background-color: var(--bg-primary);
+}
+</style>

@@ -1,7 +1,7 @@
 <template>
   <Form @aoAddTarefainList="addTarefainList"></Form>
   <div class="lista">
-    <div class="field" v-if="!ListIsEmpty">
+    <div class="field">
       <p class="control has-icons-left has-icons-right">
         <input
           class="input"
@@ -159,3 +159,9 @@ export default defineComponent({
   },
 });
 </script>
+
+<style scoped>
+.label {
+  color: var(--text-primary);
+}
+</style>
