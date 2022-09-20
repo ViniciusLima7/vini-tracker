@@ -1,15 +1,28 @@
 <template>
   <Form @aoAddTarefainList="addTarefainList"></Form>
   <div class="lista">
+    <Box v-if="ListIsEmpty">
+      Sem Tarefas iniciadas, adicione sua primeira tarefa do dia !
+    </Box>
+    <div class="field">
+      <p class="control has-icons-left has-icons-right">
+        <input
+          class="input"
+          type="text"
+          placeholder="Pesquisar Tarefas"
+          v-model="filtro"
+        />
+        <span class="icon is-small is-left">
+          <i class="fas fa-search"></i>
+        </span>
+      </p>
+    </div>
     <Tarefa
       v-for="(tarefa, index) in tarefas"
       :key="index"
       :tarefa="tarefa"
       @aotarefaClicked="selecionarTarefa"
     />
-    <Box v-if="ListIsEmpty">
-      Sem Tarefas iniciadas, adicione sua primeira tarefa do dia !
-    </Box>
     <div
       class="modal"
       :class="{ 'is-active': tarefaSelecionada }"
@@ -49,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import Form from "../components/Form.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
@@ -136,10 +149,24 @@ export default defineComponent({
     store.dispatch(GET_TASKS);
     store.dispatch(GET_PROJECTS);
 
+    const filtro = ref("");
+
+    /**
+     * Filtra Tarefa
+     *@description
+     *19/09/20/22 vlima Faz filtro nas tarefas
+     */
+    const tarefas = computed(() =>
+      store.state.tarefa.tarefas.filter(
+        (task) => !filtro.value || task.description.includes(filtro.value)
+      )
+    );
+
     return {
-      tarefas: computed(() => store.state.tarefa.tarefas),
+      tarefas,
       store,
       notificar,
+      filtro,
     };
   },
 });
