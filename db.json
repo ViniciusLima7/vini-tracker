@@ -10,8 +10,27 @@
     },
     {
       "id": 2,
-      "name": "VUE"
+      "name": "VUE 3"
     }
   ],
-  "tarefas": []
+  "tarefas": [
+    {
+      "timeInSeconds": 2,
+      "description": "Terminar Projeto Vini Tracker",
+      "projeto": {
+        "id": 2,
+        "name": "VUE"
+      },
+      "id": 1
+    },
+    {
+      "timeInSeconds": 4,
+      "description": "Fazer commits no Vini Tracker",
+      "projeto": {
+        "id": 2,
+        "name": "VUE"
+      },
+      "id": 2
+    }
+  ]
 }

@@ -18,7 +18,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "../../store";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../../hooks/notificador";
@@ -32,19 +32,6 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.project.projetos.find(
-        (proj) => proj.id === this.id
-      );
-      this.nomeDoProjeto = projeto?.name || "";
-    }
-  },
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
-  },
   methods: {
     /**
      * Salva o Projeto digitado na Lista de Projetos e depois limpa o input
@@ -99,13 +86,22 @@ export default defineComponent({
     },
   },
 
-  setup() {
+  setup(props) {
     const store = useStore();
     const { notificar } = useNotificador();
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.project.projetos.find(
+        (proj) => proj.id == props.id
+      );
+      nomeDoProjeto.value = projeto?.name || "";
+    }
+
     return {
       store,
       notificar,
-      projetos: computed(() => store.state.project.projetos),
+      nomeDoProjeto,
     };
   },
 });
