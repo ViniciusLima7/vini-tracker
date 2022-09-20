@@ -18,11 +18,12 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent } from "vue";
+import { defineComponent, ref } from "vue";
 import { useStore } from "../../store";
-import { ADD_PROJECT, EDIT_PROJECT } from "@/store/type-mutations";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../../hooks/notificador";
+import { CREATE_PROJECT, UPDATE_PROJECT } from "@/store/type-actions";
+import { useRouter } from "vue-router";
 
 export default defineComponent({
   name: "Formulario",
@@ -32,59 +33,75 @@ export default defineComponent({
     },
   },
 
-  mounted() {
-    if (this.id) {
-      const projeto = this.store.state.projetos.find(
-        (proj) => proj.id === this.id
+  setup(props) {
+    const store = useStore();
+    const { notificar } = useNotificador();
+    const router = useRouter();
+
+    const nomeDoProjeto = ref("");
+
+    if (props.id) {
+      const projeto = store.state.project.projetos.find(
+        (proj) => proj.id == props.id
       );
-      this.nomeDoProjeto = projeto?.name || "";
+      nomeDoProjeto.value = projeto?.name || "";
     }
-  },
-  data() {
-    return {
-      nomeDoProjeto: "",
-    };
-  },
-  methods: {
+
     /**
      * Salva o Projeto digitado na Lista de Projetos e depois limpa o input
      *@description
      *02/08/2022 vlima Salvar Projeto
      */
-    salvar() {
-      if (this.id) {
-        this.store.commit(EDIT_PROJECT, {
-          id: this.id,
-          name: this.nomeDoProjeto,
-        });
+    const salvar = () => {
+      if (props.id) {
+        store
+          .dispatch(UPDATE_PROJECT, {
+            id: props.id,
+            name: nomeDoProjeto.value,
+          })
+          .then(() => isSuccess());
       } else {
-        if (this.nomeDoProjeto == "") {
-          this.notificar(
-            TypeNotification.FALHA,
-            "Erro !",
-            "Projeto não cadastrado! Digite um nome válido"
-          );
+        if (nomeDoProjeto.value == "") {
+          isError();
           return;
         }
-        this.store.commit(ADD_PROJECT, this.nomeDoProjeto);
+        store
+          .dispatch(CREATE_PROJECT, nomeDoProjeto.value)
+          .then(() => isSuccess());
       }
+    };
 
-      this.nomeDoProjeto = "";
-      this.notificar(
+    /**
+     * Emita a Notificação de Sucesso e faz o push na Criação ou Alteração do Projeto
+     *@description
+     *06/09/2022 Lida com o Sucesso de uma alteração na Aplicação
+     */
+    const isSuccess = () => {
+      nomeDoProjeto.value = "";
+      notificar(
         TypeNotification.SUCESSO,
         "Excelente !",
         "Projeto cadastrado com Sucesso"
       );
-      this.$router.push("/projetos");
-    },
-  },
-  setup() {
-    const store = useStore();
-    const { notificar } = useNotificador();
+      router.push("/projetos");
+    };
+
+    /**
+     * Emita a Notificação de Falha
+     *@description
+     *06/09/2022 Lida com a Falha na Ação do User
+     */
+    const isError = () => {
+      notificar(
+        TypeNotification.FALHA,
+        "Erro !",
+        "Projeto não cadastrado! Digite um nome válido"
+      );
+    };
+
     return {
-      store,
-      notificar,
-      projetos: computed(() => store.state.projetos),
+      nomeDoProjeto,
+      salvar,
     };
   },
 });

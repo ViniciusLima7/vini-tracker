@@ -1,6 +1,6 @@
 <template>
   <Box>
-    <div class="columns">
+    <div class="columns cursor" @click="tarefaClicked">
       <div class="column is-4">
         <h3>Descrição</h3>
         {{ tarefa.description || "Tarefa sem Descrição" }}
@@ -25,11 +25,23 @@ import Box from "./Box.vue";
 
 export default defineComponent({
   name: "Tarefa",
+  emits: ["aotarefaClicked"],
   components: { Cronometro, Box },
   props: {
     tarefa: {
       type: Object as PropType<ITarefa>,
       required: true,
+    },
+  },
+
+  methods: {
+    /**
+     * Tarefa Clicada
+     *@description
+     *19/09/20/22 vlima Faz a emissão do evento ao clicar em qualquer parte da tarefa
+     */
+    tarefaClicked(): void {
+      this.$emit("aotarefaClicked", this.tarefa);
     },
   },
 });
@@ -38,5 +50,9 @@ export default defineComponent({
 <style scoped>
 h3 {
   font-weight: bold;
+}
+
+.cursor {
+  cursor: pointer;
 }
 </style>

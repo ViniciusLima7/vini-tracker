@@ -16,7 +16,7 @@
       <div class="column is-3">
         <div class="select">
           <select v-model="idProjeto">
-            <option value="">Selecione o Projeto</option>
+            <option value="" disabled selected>Selecione o Projeto</option>
             <option
               :value="projeto.id"
               v-for="projeto in projetos"
@@ -37,7 +37,7 @@
 
 <script lang="ts">
 import { key } from "@/store";
-import { computed, defineComponent } from "vue";
+import { computed, defineComponent, ref } from "vue";
 import { useStore } from "vuex";
 import Temporizador from "./Temporizador.vue";
 
@@ -47,32 +47,35 @@ export default defineComponent({
   components: {
     Temporizador,
   },
-  data() {
-    return {
-      descricaoTarefa: "",
-      idProjeto: "",
-    };
-  },
-  methods: {
+  setup(props, { emit }) {
+    const store = useStore(key);
+
+    const descricaoTarefa = ref("");
+    const idProjeto = ref("");
+    const projetos = computed(() => store.state.project.projetos);
+
     /**
      * Após Finalizar a Tarefa pega a descrição e o tempo da mesma.
      *@description
      *24/07/2022 vlima Pega Dados da Tarefa
      *04/08/2022 vlima Adiciona nome do Projeto na lista de Tarefas
      */
-    finalizarTarefaData(timeELapsed: number): void {
-      this.$emit("aoAddTarefainList", {
+    const finalizarTarefaData = (timeELapsed: number): void => {
+      emit("aoAddTarefainList", {
         timeInSeconds: timeELapsed,
-        description: this.descricaoTarefa,
-        projeto: this.projetos.find((projeto) => projeto.id == this.idProjeto),
+        description: descricaoTarefa.value,
+        projeto: projetos.value.find(
+          (projeto) => projeto.id == idProjeto.value
+        ),
       });
-      this.descricaoTarefa = "";
-    },
-  },
-  setup() {
-    const store = useStore(key);
+      descricaoTarefa.value = "";
+    };
+
     return {
-      projetos: computed(() => store.state.projetos),
+      projetos,
+      descricaoTarefa,
+      idProjeto,
+      finalizarTarefaData,
     };
   },
 });

@@ -39,15 +39,15 @@
 <script lang="ts">
 import { computed, defineComponent } from "vue";
 import { useStore } from "../../store";
-import { DELETE_PROJETO } from "@/store/type-mutations";
 import { TypeNotification } from "@/enums/TypeNotification";
 import useNotificador from "../../hooks/notificador";
+import { GET_PROJECTS, REMOVE_PROJECT } from "@/store/type-actions";
 
 export default defineComponent({
   name: "Projetos",
   methods: {
     excluir(id: string) {
-      this.store.commit(DELETE_PROJETO, id);
+      this.store.dispatch(REMOVE_PROJECT, id);
       this.notificar(
         TypeNotification.SUCESSO,
         "Excelente !",
@@ -55,12 +55,14 @@ export default defineComponent({
       );
     },
   },
+
   setup() {
     const store = useStore();
     const { notificar } = useNotificador();
+    store.dispatch(GET_PROJECTS);
 
     return {
-      projetos: computed(() => store.state.projetos),
+      projetos: computed(() => store.state.project.projetos),
       store,
       notificar,
     };
