@@ -28,10 +28,15 @@ export const tarefa: Module<StateTarefa, State> = {
     },
   },
   actions: {
-    [GET_TASKS]({ commit }) {
-      clienteHttp
-        .get("tarefas")
-        .then((resp) => commit(DEFINIR_TAKS, resp.data));
+    [GET_TASKS]({ commit }, filtro: string) {
+      let url = "tarefas";
+
+      if (filtro) {
+        // url += "?descricao=" + filtro;
+        url += `?description=${filtro}`;
+      }
+
+      clienteHttp.get(url).then((resp) => commit(DEFINIR_TAKS, resp.data));
     },
 
     [CREATE_TASK]({ commit }, tarefa: ITarefa) {

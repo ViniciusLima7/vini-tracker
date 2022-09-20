@@ -62,7 +62,7 @@
 </template>
 
 <script lang="ts">
-import { computed, defineComponent, ref } from "vue";
+import { computed, defineComponent, ref, watchEffect } from "vue";
 import Form from "../components/Form.vue";
 import Tarefa from "../components/Tarefa.vue";
 import Box from "../components/Box.vue";
@@ -156,14 +156,12 @@ export default defineComponent({
      *@description
      *19/09/20/22 vlima Faz filtro nas tarefas
      */
-    const tarefas = computed(() =>
-      store.state.tarefa.tarefas.filter(
-        (task) => !filtro.value || task.description.includes(filtro.value)
-      )
-    );
+    watchEffect(() => {
+      store.dispatch(GET_TASKS, filtro.value);
+    });
 
     return {
-      tarefas,
+      tarefas: computed(() => store.state.tarefa.tarefas),
       store,
       notificar,
       filtro,
